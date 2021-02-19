@@ -1,0 +1,26 @@
+{% load static %}
+{% load thumbnail %}
+{% for house in house_list %}
+
+<div class="card mb-3">
+  {% if house.main_picture %}
+    {% thumbnail house.main_picture "500" as im %}
+    <a href="{{ house.main_picture.url }}">
+      <img src="{{ im.url }}" alt="house picture">
+    </a>
+    {% endthumbnail %}
+  {% else %}
+    <img src="{% static 'houses/img/no_image.png' %}" alt="house picture">
+  {% endif %}
+  <div class="card-body">
+    <h5 class="card-title">{{ house.description }}</h5>
+    <p class="card-text"><small class="text-muted"><a class='btn btn-success' href="{{ house.get_absolute_url }}">Detail</a></small></p>
+  </div>
+</div>
+
+
+{% empty %}
+<p>No house Yet</p>
+{% endfor %}
+
+

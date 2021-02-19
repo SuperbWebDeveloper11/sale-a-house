@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+ 
+<h3>Create house</h3>
+
+<form action="{% url 'houses:house_add' %}" method="post" novalidate enctype="multipart/form-data" class="uniForm">
+    {{ form|crispy }}
+    {% csrf_token %}
+    <br>
+    <p><input type="submit" value="Create" class='btn btn-primary'></p>
+</form>
+
+
+
+{% endblock %}

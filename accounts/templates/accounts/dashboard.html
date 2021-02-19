@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div>
+  {% if user.firstname %}
+    <h1>Hello Mr {{ user.first_name }} </h1>
+  {% else %}
+    <h1>Hello {{ user.username }} </h1>
+  {% endif %}
+  <p> This is your dashboard. 
+    You can <a href="{% url "edit" %}">Edit your Profile</a> 
+    or <a href="{% url "password_change" %}">change your password</a>.
+  </p>
+  {% if user.profile.photo %}
+    <img src="{{ user.profile.photo.url }}" alt="Profile Photo" class='img-fluid'>
+  {% endif %}
+</div>
+{% endblock %}

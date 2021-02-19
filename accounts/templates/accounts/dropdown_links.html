@@ -1,0 +1,12 @@
+
+<a class="dropdown-item" href="{% url 'littlemedium:post_list' %}"> posts </a>
+{% if user.is_authenticated %}
+<a class="dropdown-item" href="{% url 'littlemedium:my_posts' %}"> My posts </a>
+<a class="dropdown-item" href="{% url 'littlemedium:my_favorite_posts' %}"> Favorites </a>
+<a class="dropdown-item" href="{% url 'littlemedium:my_liked_posts' %}"> Liked </a> 
+<a class="dropdown-item" href="{% url 'littlemedium:my_disliked_posts' %}"> Disliked </a>
+<a class="dropdown-item" href="{% url 'littlemedium:post_add' %}"> Add post </a>
+{% endif %}
+</p>
+
+

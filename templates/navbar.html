@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="{% url 'dashboard' %}">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          #####
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          {# {% include 'littlemedium/post/useful_links.html' %} #}
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Blog</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+
+      {% if not request.user.is_authenticated %}
+        <li class="nav-item">
+          <a href="{% url "login" %}" class="nav-link" > Login </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url "register" %}" class="nav-link" > Register </a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a href="{% url "logout" %}" class="nav-link" > Logout </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" > Hello <b>{{ request.user.username }} </a>
+        </li>
+      {% endif %}
+
+
+
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search">
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+
+

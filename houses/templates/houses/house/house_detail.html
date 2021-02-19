@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load thumbnail %}
+
+{% block content %}
+
+<h2>{{ house.description }}</h2>
+
+{% if house.main_picture %}
+  {% thumbnail house.main_picture "500" as im %}
+  <a href="{{ house.main_picture.url }}">
+    <img src="{{ im.url }}" alt="house picture">
+  </a>
+  {% endthumbnail %}
+{% else %}
+  <img src="{% static 'houses/img/no_image.png' %}" alt="house picture">
+{% endif %}
+
+<br>
+<br>
+<!-- Display 'Edit' and 'Delete' buttons -->
+{% if user.is_authenticated and house.created_by == user %}
+<p>
+<a href="{% url 'houses:house_update' house.pk %}" class="btn btn-primary"> Update </a> 
+<a href="{% url 'houses:house_delete' house.pk %}" class="btn btn-danger"> Delete </a>
+</p>
+<hr />
+{% endif %}
+
+<hr />
+
+<!-- Display comment form -->
+{% if user.is_authenticated %}
+<form 
+  {% if update_form %}
+    action="{% url 'houses:house_update_comment' pk=house.pk comment_pk=comment_form.instance.pk %}" 
+  {% else %}
+    action="{% url 'houses:house_detail' pk=house.pk %}" 
+  {% endif %}
+  method="post" 
+  novalidate 
+  enctype="multipart/form-data" 
+  class="uniForm">
+    {{ comment_form|crispy }}
+    {% csrf_token %}
+    <br>
+    <p><input type="submit" value="Comment" class='btn btn-primary'></p>
+</form>
+{% endif %}
+
+{% for comment in house.comments.all %}
+  <li>
+    {{comment.content}}
+    {% if user.is_authenticated and house.created_by == user %}
+    <a href="{% url 'houses:house_update_comment' pk=house.pk comment_pk=comment.pk %}" class="btn btn-primary"> Update </a> 
+    <a href="{% url 'houses:house_delete_comment' pk=house.pk comment_pk=comment.pk %}" class="btn btn-danger"> Delete </a>
+    {% endif %}
+    <br>
+    <br>
+  </li>
+{% endfor %}
+
+
+{% endblock %}

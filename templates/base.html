@@ -10,7 +10,7 @@
   <body>
 
     <div class='container'>
-      {% include 'navbar.html' %}
+      {% include 'navbar2.html' %}
       <!-- display messages using django messages framework -->
       {% if messages %}
       <div class="messages">
@@ -27,7 +27,7 @@
 
     <script src='{% static 'js/jquery-3.5.1.min.js' %}'></script>
     <script src='{% static 'js/bootstrap.min.js' %}'></script>
-    <script src='{% static 'houses/infinite-scroll.js' %}'></script>
+    {% block infinite_scroll %} {% endblock %}
 
   </body>
 </html>

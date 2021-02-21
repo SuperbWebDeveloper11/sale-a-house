@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'houses.apps.HousesConfig',
     'sorl.thumbnail',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'findahouse.wsgi.application'
 
-# postgres configuration from .env file
 
 DATABASES = {
     'default': {

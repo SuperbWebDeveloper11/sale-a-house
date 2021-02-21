@@ -53,7 +53,7 @@ class HouseCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView): # create
     model = House
     initial = {'description': 'beaultiful house'}
     template_name = 'houses/house/house_form_create.html' 
-    fields = ['description', 'main_picture']
+    fields = ['description', 'main_picture', 'price', 'location', 'phonenumber', 'email']
     success_message = "house was created successfully"
 
     def form_valid(self, form):
@@ -64,7 +64,7 @@ class HouseCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView): # create
 class HouseUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView): # update house 
     model = House
     template_name = 'houses/house/house_form_update.html' 
-    fields = ['description', 'main_picture']
+    fields = ['description', 'main_picture', 'price', 'location', 'phonenumber', 'email']
     success_message = "house was updated successfully"
 
     def form_valid(self, form):

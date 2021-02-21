@@ -7,6 +7,11 @@
 
 <h2>{{ house.description }}</h2>
 
+<p><b>Location: </b><br />{{ house.location }}</p>
+<p><b>Price: </b><br />{{ house.price }}</p>
+<p><b>Email: </b><br />{{ house.email }}</p>
+<p><b>Phone Number: </b><br />{{ house.phonenumber }}</p>
+
 {% if house.main_picture %}
   {% thumbnail house.main_picture "500" as im %}
   <a href="{{ house.main_picture.url }}">
@@ -22,16 +27,30 @@
 <!-- Display 'Edit' and 'Delete' buttons -->
 {% if user.is_authenticated and house.created_by == user %}
 <p>
-<a href="{% url 'houses:house_update' house.pk %}" class="btn btn-primary"> Update </a> 
+<a href="{% url 'houses:house_update' house.pk %}" class="btn btn-info"> Update </a> 
 <a href="{% url 'houses:house_delete' house.pk %}" class="btn btn-danger"> Delete </a>
 </p>
-<hr />
+<br />
 {% endif %}
 
-<hr />
+{% for comment in house.comments.all %}
+  <li>
+    {{comment.content}}
+    {% if user.is_authenticated and house.created_by == user %}
+    <a href="{% url 'houses:house_update_comment' pk=house.pk comment_pk=comment.pk %}" class="btn btn-success"> Update </a> 
+    <a href="{% url 'houses:house_delete_comment' pk=house.pk comment_pk=comment.pk %}" class="btn btn-danger"> Delete </a>
+    {% endif %}
+    <br>
+    <br>
+  </li>
+{% empty %}
+  <p>no comment yet</p>
+{% endfor %}
 
 <!-- Display comment form -->
 {% if user.is_authenticated %}
+<br />
+<p>add your comment:</p>
 <form 
   {% if update_form %}
     action="{% url 'houses:house_update_comment' pk=house.pk comment_pk=comment_form.instance.pk %}" 
@@ -42,24 +61,22 @@
   novalidate 
   enctype="multipart/form-data" 
   class="uniForm">
-    {{ comment_form|crispy }}
-    {% csrf_token %}
+  {% for field in comment_form %}
+  <div class='form-group'>
+    {% if field.errors %}
+    <div class='alert alert-danger'>
+      {{ field.errors }}
+    </div>
+    {% endif %}
+      {{ field }}
+  </div>
+  {% endfor %}
+  {% csrf_token %}
     <br>
-    <p><input type="submit" value="Comment" class='btn btn-primary'></p>
+    <p><input type="submit" value="add comment" class='btn btn-success'></p>
 </form>
 {% endif %}
 
-{% for comment in house.comments.all %}
-  <li>
-    {{comment.content}}
-    {% if user.is_authenticated and house.created_by == user %}
-    <a href="{% url 'houses:house_update_comment' pk=house.pk comment_pk=comment.pk %}" class="btn btn-primary"> Update </a> 
-    <a href="{% url 'houses:house_delete_comment' pk=house.pk comment_pk=comment.pk %}" class="btn btn-danger"> Delete </a>
-    {% endif %}
-    <br>
-    <br>
-  </li>
-{% endfor %}
 
 
 {% endblock %}
